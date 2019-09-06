@@ -10,14 +10,15 @@ from util.process_data import get_cam_data, get_dect2D_data
 os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
+
 class video(object):
     def __init__(self, config):
         path = config["video_path"]
         self.cap = cv2.VideoCapture(path)
         fourcc = cv2.VideoWriter_fourcc(*'XVID')
         fps = self.cap.get(cv2.CAP_PROP_FPS)
-        size = (int(self.cap.get(cv2.CAP_PROP_FRAME_WIDTH)), int(self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT)))
-        self.out = cv2.VideoWriter('result_video/'+path.split("/")[-1], fourcc, fps, size)
+        self.size = (int(self.cap.get(cv2.CAP_PROP_FRAME_WIDTH)), int(self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT)))
+        self.out = cv2.VideoWriter('result_video/'+path.split("/")[-1], fourcc, fps, self.size)
 
     def get_image(self):
         while (self.cap.isOpened()):
